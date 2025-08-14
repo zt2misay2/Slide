@@ -1,0 +1,80 @@
+# 工作流名称
+name: Deploy Slides to Pages via Custom Script
+
+on:
+  # 在推送到 main 分支时触发
+  push:
+    branches: ["main"]
+  # 允许在 GitHub Actions 页面手动触发
+  workflow_dispatch:
+
+# 设置工作流所需的权限
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# 设置并发控制，确保同一时间只有一个部署任务在运行
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  # 定义一个名为 'deploy' 的部署任务
+  deploy:
+    # 指定部署环境为 GitHub Pages
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    # 使用最新的 Ubuntu 虚拟机运行
+    runs-on: ubuntu-latest
+    steps:
+      # 步骤1: 检出你的代码仓库
+      # 这一步会获取你所有的文件，包括 'slides/build' 脚本
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      # 步骤2: 设置 Node.js 环境
+      # 因为你原始的依赖安装中包含了 npm，所以这一步是必需的
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      # 步骤3: 安装依赖
+      # 完全遵循你原始工作流中为 master 分支安装的依赖
+      - name: Install Dependencies
+        run: npm install -g reveal-md
+
+      # 步骤4: 执行你自定义的构建脚本
+      # 这是最核心的部分，我们精确地执行你原来的命令
+      - name: Build Slides using custom script
+        run: |
+          # 为你的构建脚本添加可执行权限，这是一个好习惯，可以防止权限问题
+          chmod +x slides/build
+
+          # 创建最终用于部署的目录结构
+          mkdir -p site/slides
+
+          # 执行你仓库中的构建脚本
+          slides/build build
+
+          # 执行你原始的文件移动指令
+          # 这会将在 'slides/dist' 中生成的幻灯片文件移动到最终的部署目录 'site/slides'
+          [ -d slides/dist ] && mv slides/dist/* site/slides || true
+
+      # 步骤5: 设置 GitHub Pages
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      # 步骤6: 上传构建产物
+      # 'site' 目录现在包含了从 'slides/dist' 移动过来的幻灯片文件
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "./site"
+
+      # 步骤7: 部署到 GitHub Pages
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
