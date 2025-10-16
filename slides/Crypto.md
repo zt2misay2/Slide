@@ -80,13 +80,28 @@ revealOptions:
 <br>
 <center><h5 style="font-size: 55px; text-align: center;">密码学基础</h5></center>
 <br>
-<center><h1 style="font-size: 30px; text-align: center;">2025.8</h1></center>
+<center><h1 style="font-size: 30px; text-align: center;">2025.10.18<h1></center>
+
 <br>
+
 <center><div class="button-container" >
 <button class="button" onclick="toggleContent()" title = "Click to see more about me">
-<img src="Crypto/zijeff.jpg" alt="Button Image">  
+<img src="Crypto/zijeff1.jpg" alt="Button Image">  
 </button>
-<span>Zijeff</span>
+
+<span>Speaker : Zijeff</span>
+</div></center>
+
+
+<br>
+
+
+<center><div class="button-container" >
+<button class="button" onclick="toggleContent()" title = "Click to see more about me">
+<img src="Crypto/misay.jpg" alt="Button Image">  
+</button>
+
+<span>slides made by : Misay</span>
 </div></center>
 
 <!-- s -->
@@ -1085,7 +1100,7 @@ CTF赛题中与RSA相关的漏洞往往体现在以下三个方面
 	- 用不同的公钥进行加密，但选取不当导致能直接通过`gcd`分解$n$
 - $p-1$,$p+1$光滑
 	- 可能会被`Pollard's p-1 ` 或者`Williams's p+1` 算法分解 
-</div>
+	</div>
 
 <!-- v -->
 <!-- .slide: data-background="Crypto/background.webp" -->
@@ -1141,7 +1156,6 @@ $$
 $$
 c_2-c_1^2\equiv 0 \mod n\\\\c_3-c_1^3\equiv 0 \mod n
 $$
-
 </div>
 
 <!-- v -->
@@ -1154,7 +1168,6 @@ $$
 $$
 n=gcd(c_2-c_1^2,c_3-c_1^3)
 $$
-
 </div>
 
 
@@ -1258,18 +1271,15 @@ $$
 k\equiv(H(m)+xr)s^{-1} \mod q \tag{1}
 $$
 
-
 </div>
 
 
 <div class="fragment" style="margin-top: 40px">
 
 假设我们是Bob,我们手头有$m$,$(r,s)$,$(p,q,g,y)$,通过(1)式子我们已经算出了可能的$k$，下一步如果这个$k$的确是签名时候生成的$k$，那它就得满足
-
 $$
 r\equiv(g^k\mod p)\mod q \tag{2}
 $$
-
 </div>
 
 <!-- v -->
@@ -1293,7 +1303,6 @@ $$
 $$
 (g^{(H(m)+xr)s^{-1}}\mod p)\mod q
 $$
-
 </div>
 
 <div class="fragment" style="margin-top: 40px">
