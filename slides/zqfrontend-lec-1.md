@@ -139,7 +139,7 @@ font-size: 20px;
 <center><h5 style="font-size: 55px; text-align: center;">关于前端部</h5></center>
 
 <!-- v -->
-<!-- .slide: data-background="Crypto/background.webp" -->
+<!-- .slide: data-background="zqfrontend-lec-1/background.webp" -->
 
 ## 我们今年的安排
 
@@ -151,7 +151,7 @@ font-size: 20px;
 	- 12月 基本开发规范 寒假新人项目规划 部分竞赛推荐
 	- 3月/4月 新人项目跟进/验收 
 	- 5月 换届
-</div>
+	</div>
 
 <!-- s -->
 <!-- .slide: data-background="Crypto/background.webp" -->
